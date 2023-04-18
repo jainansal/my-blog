@@ -1,0 +1,214 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Rubik', sans-serif;
+}
+
+body {
+  font-family: 'Rubik', sans-serif;
+  background: linear-gradient(270deg, #c55df6, #baebff);
+  background-size: 400% 400%;
+  -webkit-animation: AnimationName 25s ease infinite;
+  -moz-animation: AnimationName 25s ease infinite;
+  -o-animation: AnimationName 25s ease infinite;
+  animation: AnimationName 25s ease infinite;
+  color: #222;
+}
+
+
+
+a {
+  text-decoration: none;
+  cursor: pointer;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+}
+
+main {
+  /* padding: 10px; */
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  margin-bottom: 50px;
+  align-items: center;
+  padding: 3%;
+}
+
+header a {
+  text-decoration: none;
+  color: inherit;
+}
+
+header a.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
+header nav {
+  display: flex;
+  gap: 15px;
+}
+
+a.post {
+  display: inline-flex;
+  margin-bottom: 60px;
+  cursor: pointer;
+  gap: 30px;
+  padding: 0 3%;
+}
+
+a.post div.image {
+  display: flex;
+  max-width: 20rem;
+  min-width: 20rem;
+}
+
+a.post div.texts h2 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+a.post p.info {
+  margin:6px 0;
+  color: #888;
+  font-size: .7rem;
+  font-weight: bold;
+  display: flex;
+  gap: 10px;
+}
+
+a.post p.info a.author {
+  color: #333;
+}
+
+a.post p.summary {
+  margin:10px 0;
+  line-height: 1.4rem;
+}
+
+form.login, form.register {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+input {
+  display: block;
+  margin-bottom: 5px;
+  width: 100%;
+  padding: 5px 7px;
+  background-color: #fff;
+  border: 2px solid #ddd;
+  border-radius: 5px;
+}
+
+button {
+  width: 100%;
+  display: block;
+  background-color: #2196f3;
+  border: 0;
+  color: #fff;
+  border-radius: 5px;
+  padding: 7px 0;
+  cursor: pointer;
+}
+
+form.login h1, form.register h1 {
+  text-align: center;
+}
+
+div.post-page {
+  padding: 0 3%;
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+div.post-page div.image {
+  display: flex;
+}
+
+div.post-page h1{
+  margin-top: 0;
+  margin-bottom: 5px;
+}
+
+div.post-page time {
+  display: block;
+  font-size: 0.8rem;
+  color: #504f4f;
+}
+
+div.post-page div.author {
+  margin-bottom: 5px;
+  display: block;
+  font-size: 0.8rem;
+  color: #504f4f;
+}
+
+div.post-page div.content p {
+  line-height: 1.6rem;
+}
+
+div.post-page div.edit-row {
+  margin-bottom: 10px;
+  margin-top:5px;
+  display: flex;
+  gap: 10px;
+}
+
+div.post-page div.edit-row a {
+  padding: 5px 10px;
+  background-color: #2196f3;
+  border-radius: 5px;
+  color: white;
+  display: inline-flex;
+  gap: 4px;
+  
+  /* display: block; */
+}
+
+a svg {
+  width: 17.5px;
+}
+
+.delete-btn {
+  padding: 5px 10px;
+  display: inline-flex;
+  border-radius: 5px;
+  color: white;
+  gap: 4px;
+  background-color: red;
+  cursor: pointer;
+}
+
+.delete-btn svg {
+  width:17.5px;
+}
+
+@-webkit-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-moz-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@-o-keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
+@keyframes AnimationName {
+  0%{background-position:0% 50%}
+  50%{background-position:100% 50%}
+  100%{background-position:0% 50%}
+}
