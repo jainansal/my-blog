@@ -22,7 +22,7 @@ function CreatePost() {
         if(postImage) data.set('image', postImage[0]);
         data.set('content', postContent);
         
-        const response = await fetch(apiURL + 'new-post', {
+        const response = await fetch(apiURL + '/new-post', {
             method: 'POST',
             body: data,
             credentials: 'include'
