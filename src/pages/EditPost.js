@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom"
 import { UserContext } from "../components/UserContext";
 import ReactQuill from "react-quill";
+import { apiURL } from "../components/Domain";
 
 const modules = {
     toolbar: [
@@ -30,7 +31,7 @@ export default function EditPost() {
     const {userInfo} = useContext(UserContext);
 
     useEffect(() => {
-        fetch('http://localhost:4000/post/'+id).then(
+        fetch(apiURL+'/post/'+id).then(
             response => {
                 response.json().then(postInfo => {
                     // postTitle = postInfo.title;
@@ -51,7 +52,7 @@ export default function EditPost() {
         data.set('image', postImage?.[0])
         data.set('content', postContent);
         
-        const response = await fetch('http://localhost:4000/post/'+id, {
+        const response = await fetch(apiURL+ '/post/'+id, {
             method: 'PUT',
             body: data,
             credentials: 'include'

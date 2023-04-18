@@ -2,6 +2,7 @@ import { format, formatISO9075 } from "date-fns";
 import { useContext, useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { UserContext } from "../components/UserContext";
+import { apiURL } from "../components/Domain";
 
 
 export default function PostPage() {
@@ -13,7 +14,7 @@ export default function PostPage() {
     console.log(id);
 
     useEffect(() => {
-        fetch(`http://localhost:4000/post/${id}`).then(response => {
+        fetch(`${apiURL}/post/${id}`).then(response => {
             response.json().then(postDoc => {
                 setPostInfo(postDoc);
             })
@@ -23,7 +24,7 @@ export default function PostPage() {
     console.log(postInfo);
 
     function handleDeleteClick(ev) {
-        fetch('http://localhost:4000/delete/'+id, {
+        fetch(apiURL + '/delete/'+id, {
             credentials:'include'
         }).then(response => {
             setRedirect(true);
@@ -58,7 +59,7 @@ export default function PostPage() {
             )}
             <div className="image">
                 {postInfo.image && (
-                    <img src={'http://localhost:4000/' + postInfo.image} />
+                    <img src={apiURL + '/' + postInfo.image} />
                 )}
             </div>
             <div className="content" dangerouslySetInnerHTML={{ __html: postInfo.content }} />

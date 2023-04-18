@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { Link, Navigate, NavigationType } from "react-router-dom";
 import { UserContext } from "./UserContext";
+import { apiURL } from "./Domain";
 
 function Header() {
     const {userInfo, setUserInfo} = useContext(UserContext);
     const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
-        fetch('http://localhost:4000/profile', {
+        fetch(apiURL + '/profile', {
             credentials: 'include'
         }).then(response => {
             response.json().then(UserInfo => {
@@ -17,7 +18,7 @@ function Header() {
     }, []);
 
     function logout() {
-        fetch ('http://localhost:4000/logout', {
+        fetch (apiURL + '/logout', {
             credentials: 'include',
             method: 'POST'
         });

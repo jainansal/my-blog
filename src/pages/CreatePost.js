@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css'
 import { Navigate } from 'react-router-dom';
 import { UserContext } from '../components/UserContext';
 import { modules, formats } from '../components/QuillComps';
+import { apiURL } from '../components/Domain';
 
 function CreatePost() {
     const [postTitle, setPostTitle] = useState('');
@@ -21,7 +22,7 @@ function CreatePost() {
         if(postImage) data.set('image', postImage[0]);
         data.set('content', postContent);
         
-        const response = await fetch('http://localhost:4000/new-post', {
+        const response = await fetch(apiURL + 'new-post', {
             method: 'POST',
             body: data,
             credentials: 'include'

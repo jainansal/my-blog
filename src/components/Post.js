@@ -1,5 +1,6 @@
 import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
+import { apiURL } from './Domain';
 
 function Post({ _id, title, image, summary, createdAt, author }) {
     const formattedDate = format(new Date(createdAt), 'MMM d, yyyy | HH:MM');
@@ -8,7 +9,7 @@ function Post({ _id, title, image, summary, createdAt, author }) {
         <Link to={'/post/'+_id} className="post">
             <div className="image">
                     {image && (
-                        <img src={'http://localhost:4000/' + image} />
+                        <img src={apiURL + '/' + image} />
                     )}
             </div>
             <div className="texts">
