@@ -12,7 +12,7 @@ function RegisterPage() {
     async function register(ev) {
         ev.preventDefault();
 
-        const response = await fetch(apiURL + '/register', {
+        const response = await fetch(apiURL + '/auth/register', {
             method: 'POST',
             body: JSON.stringify({ username, password }),
             headers: { 'Content-Type': 'application/json' },

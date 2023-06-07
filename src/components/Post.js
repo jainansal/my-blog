@@ -2,23 +2,26 @@ import { format } from 'date-fns';
 import { Link } from 'react-router-dom';
 import { apiURL } from './Domain';
 
-function Post({ _id, title, image, summary, createdAt, author }) {
-    const formattedDate = format(new Date(createdAt), 'MMM d, yyyy | HH:MM');
+function Post(props) {
+
+    console.log(props.author);
+
+    const formattedDate = format(new Date(props.createdAt), 'MMM d, yyyy | HH:MM');
 
     return (
-        <Link to={'/post/'+_id} className="post">
+        <Link to={'/post/'+props._id} className="post">
             <div className="image">
-                    {image && (
-                        <img src={apiURL + '/' + image} />
+                    {props.image && (
+                        <img src={props.image} />
                     )}
             </div>
             <div className="texts">
-                    <h2>{title}</h2>
+                    <h2>{props.title}</h2>
                 <p className="info">
-                    <a href="" className="author">{author.username}</a>
+                <a href="" className="author">{props.author?.username}</a>
                     <time>{formattedDate}</time>
                 </p>
-                <p className='summary'>{summary}</p>
+                <p className='summary'>{props.summary}</p>
             </div>
         </Link>
     );

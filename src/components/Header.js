@@ -8,7 +8,7 @@ function Header() {
     const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
-        fetch(apiURL + '/profile', {
+        fetch(apiURL + '/user/my', {
             credentials: 'include'
         }).then(response => {
             response.json().then(UserInfo => {
@@ -29,20 +29,21 @@ function Header() {
 
     return (
         <header>
-            <Link to="/" className='logo'>Hello{username?', '+username:' there'}</Link>
+            <Link to="/" className='logo'>Hello {username ? username: 'there'}</Link>
             <nav>
-                {username && (
-                    <>
-                        <Link to='/create'>New post</Link>
-                        <a onClick={logout}>Logout</a>
-                    </>
-                )}
-                {!username && (
-                    <>
-                        <Link to="/login">Login</Link>
-                        <Link to="/register">Register</Link>
-                    </>
-                )}
+                {
+                    username ? (
+                        <>
+                            <Link to='/create'>New post</Link>
+                            <a onClick={logout}>Logout</a>
+                        </>
+                    ) : (
+                        <>
+                            <Link to="/login">Login</Link>
+                            <Link to="/register">Register</Link>
+                        </>
+                    )
+                }
             </nav>
         </header>
     );

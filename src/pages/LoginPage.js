@@ -11,7 +11,7 @@ function LoginPage() {
 
     async function login(ev) {
         ev.preventDefault();
-        const response = await fetch(apiURL + '/login', {
+        const response = await fetch(apiURL + '/auth/login', {
             method: 'POST',
             body: JSON.stringify({username, password}),
             headers: {'Content-Type':'application/json'},

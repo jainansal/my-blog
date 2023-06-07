@@ -23,10 +23,12 @@ const formats = [
 
 export default function EditPost() {
     const { id } = useParams();
-    const [postTitle, setPostTitle] = useState('');
-    const [postSummary, setPostSummary] = useState('');
-    const [postContent, setPostContent] = useState('');
-    const [postImage, setPostImage] = useState('');
+    const [formData, setFormData] = useState({
+        title: '',
+        summary: '',
+        image: '',
+        content: ''
+    })
     const [redirect, setRedirect] = useState(false);
     const {userInfo} = useContext(UserContext);
 
@@ -34,11 +36,12 @@ export default function EditPost() {
         fetch(apiURL+'/post/'+id).then(
             response => {
                 response.json().then(postInfo => {
-                    // postTitle = postInfo.title;
-                    setPostTitle(postInfo.title);
-                    setPostSummary(postInfo.summary);
-                    setPostContent(postInfo.content);
-                    // setPostImage(postInfo.image);
+                    setFormData({
+                        title: postInfo.title,
+                        summary: postInfo.summary,
+                        content: postInfo.content,
+                        image: postInfo.image
+                    })
                 })
             }
         )
@@ -46,24 +49,30 @@ export default function EditPost() {
 
     async function editPost(ev) {
         ev.preventDefault();
-        const data = new FormData;
-        data.set('title', postTitle);
-        data.set('summary', postSummary);
-        data.set('image', postImage?.[0])
-        data.set('content', postContent);
-        
+        const data = JSON.stringify(formData);        
         const response = await fetch(apiURL+ '/post/'+id, {
             method: 'PUT',
+            headers: {'Content-Type': 'application/json'},
             body: data,
             credentials: 'include'
         });
         
         if(response.ok) {
-            console.log('ok');
             setRedirect(true);
         } else {
             alert("Some error occured");
         }
+    }
+
+    const handleChange = (ev) => {
+        ev.preventDefault();
+        const { name, value } = ev.target;
+        setFormData(prevData => (
+            {
+                ...prevData,
+                [name]: value
+            }
+        ));
     }
 
     if(redirect || userInfo === null) {
@@ -77,22 +86,27 @@ export default function EditPost() {
             <input
                 type="text"
                 placeholder="Title"
-                value={postTitle}
-                onChange={ev => setPostTitle(ev.target.value)} />
+                name="title"
+                value={formData.title}
+                onChange={ev => handleChange(ev)} />
             <input
                 type="text"
                 placeholder="Summary"
-                value={postSummary}
-                onChange={ev => setPostSummary(ev.target.value)} />
+                name="summary"
+                value={formData.summary}
+                onChange={ev => handleChange(ev)} />
             <input
-                type="file"
-                onChange={ev => setPostImage(ev.target.files)} />
+                type="text"
+                placeholder="Image address"
+                name="image"
+                value={formData.image}
+                onChange={ev => handleChange(ev)} />
             <ReactQuill
                 theme="snow"
                 modules={modules}
                 formats={formats}
-                value={postContent}
-                onChange={newContent => setPostContent(newContent)} />
+                value={formData.content}
+                onChange={newContent => setFormData(prevData => ({ ...prevData, content: newContent }))} />
             <button style={{ marginTop: '5px', background: '#2196f3' }}>Update</button>
         </form>
     )

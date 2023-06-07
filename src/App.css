@@ -66,8 +66,9 @@ a.post {
 
 a.post div.image {
   display: flex;
-  max-width: 20rem;
-  min-width: 20rem;
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
 }
 
 a.post div.texts h2 {
@@ -132,6 +133,9 @@ div.post-page {
 
 div.post-page div.image {
   display: flex;
+  width: 20rem;
+  max-height: 20rem;
+  object-fit: cover;
 }
 
 div.post-page h1{

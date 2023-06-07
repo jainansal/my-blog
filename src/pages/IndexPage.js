@@ -6,7 +6,7 @@ function IndexPage() {
     const [posts, setPosts] = useState([]);
 
     useEffect(() => {
-        fetch(apiURL + '/post').then(response => {
+        fetch(apiURL + '/post/recent').then(response => {
             response.json().then(posts => {
                 setPosts(posts);
             });
@@ -15,9 +15,9 @@ function IndexPage() {
 
     return (
         <>
-            {posts.length && posts.map(post => (
+            {posts.length ? posts.map(post => (
                 <Post {...post} />
-            ))}
+            )) : ''}
         </>
     )
 }

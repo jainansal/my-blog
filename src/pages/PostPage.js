@@ -4,14 +4,11 @@ import { Link, Navigate, useParams } from "react-router-dom";
 import { UserContext } from "../components/UserContext";
 import { apiURL } from "../components/Domain";
 
-
 export default function PostPage() {
     const [postInfo, setPostInfo] = useState(null);
     const { id } = useParams();
     const { userInfo } = useContext(UserContext);
     const [redirect, setRedirect] = useState(false);
-
-    console.log(id);
 
     useEffect(() => {
         fetch(`${apiURL}/post/${id}`).then(response => {
@@ -23,12 +20,21 @@ export default function PostPage() {
 
     console.log(postInfo);
 
-    function handleDeleteClick(ev) {
-        fetch(apiURL + '/delete/'+id, {
-            credentials:'include'
-        }).then(response => {
-            setRedirect(true);
-        })
+    const handleDeleteClick = async (ev) => {
+        try {
+            const response = await fetch(`${apiURL}/post/${id}`, {
+                method: 'delete',
+                credentials: 'include'
+            });
+
+            if(response.ok) {
+                setRedirect(true);
+            } else {
+                throw response;
+            }
+        } catch(err) {
+            console.log({msg: err});
+        }
     }
 
     if(redirect) {
@@ -40,8 +46,8 @@ export default function PostPage() {
         <div className="post-page">
             <h1 className="title">{postInfo.title}</h1>
             <time>{format(new Date(postInfo.createdAt), 'MMM d, yyyy | HH:MM')}</time>
-            <div className="author">by @{postInfo.author.username}</div>
-            {userInfo && userInfo.id === postInfo.author._id && (
+            <div className="author">by @{postInfo.author?.username}</div>
+            {userInfo && userInfo.id === postInfo.author?.id && (
                 <div className="edit-row">
                     <Link to={`/edit/${postInfo._id}`} className="edit-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -59,7 +65,7 @@ export default function PostPage() {
             )}
             <div className="image">
                 {postInfo.image && (
-                    <img src={apiURL + '/' + postInfo.image} />
+                    <img src={postInfo.image} />
                 )}
             </div>
             <div className="content" dangerouslySetInnerHTML={{ __html: postInfo.content }} />
