@@ -1,3 +1,3 @@
-const apiURL = "http://localhost:4142"
+const apiURL = "https://bloginback.onrender.com"
 
 export {apiURL}
