@@ -57,7 +57,7 @@ export default function EditPost() {
             credentials: 'include'
         });
         
-        if(response.ok) {
+        if(response) {
             setRedirect(true);
         } else {
             alert("Some error occured");
