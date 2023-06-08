@@ -8,21 +8,33 @@ function Header() {
     const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
-        fetch(apiURL + '/user/my', {
-            credentials: 'include'
-        }).then(response => {
-            response.json().then(UserInfo => {
-                setUserInfo(UserInfo);
-            })
-        })
+        const getUser = async () => {
+            try {
+                const response = await fetch(apiURL+'/user/my', {credentials: 'include'});
+                if(!response.ok) {
+                    throw new Error("Couldn't fetch user information");
+                }
+                const data = await response.json();
+                setUserInfo(data);
+            } catch(err) {
+                console.log({msg:err});
+            }
+        }
+        getUser();
     }, []);
 
-    function logout() {
-        fetch (apiURL + '/logout', {
-            credentials: 'include',
-            method: 'POST'
-        });
-        setUserInfo(null);
+    // console.log(userInfo);
+
+    const logout = async () => {
+        try {
+            const response = await fetch (apiURL + '/auth/logout', {
+                method: 'POST',
+                credentials: 'include'
+            });
+            setUserInfo(null);
+        } catch(err) {
+            console.log({msg:err})
+        }
     }
 
     const username = userInfo?.username;

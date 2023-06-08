@@ -4,8 +4,6 @@ import { apiURL } from './Domain';
 
 function Post(props) {
 
-    console.log(props.author);
-
     const formattedDate = format(new Date(props.createdAt), 'MMM d, yyyy | HH:MM');
 
     return (

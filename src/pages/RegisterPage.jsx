@@ -2,6 +2,8 @@ import { useContext, useState } from 'react';
 import { UserContext } from '../components/UserContext';
 import { Navigate } from 'react-router-dom';
 import { apiURL } from '../components/Domain';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function RegisterPage() {
     const [username, setUsername] = useState('');
@@ -9,23 +11,28 @@ function RegisterPage() {
     const [redirect, setRedirect] = useState(false);
     const {setUserInfo} = useContext(UserContext);
 
-    async function register(ev) {
-        ev.preventDefault();
-
-        const response = await fetch(apiURL + '/auth/register', {
-            method: 'POST',
-            body: JSON.stringify({ username, password }),
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include'
-        });
-
-        if(response.ok) {
-            response.json().then(UserInfo => {
-                setUserInfo(UserInfo);
+    const register = async (ev) => {
+        try {
+            ev.preventDefault();
+            const response = await fetch(apiURL + '/auth/register', {
+                method: 'POST',
+                body: JSON.stringify({ username, password }),
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include'
+            });
+            
+            const data = await response.json();
+            if(data.username) {
+                setUserInfo(data);
                 setRedirect(true);
-            })
-        } else {
-            alert("try again!")
+            } else {
+                throw data;
+            }
+        } catch(err) {
+            console.log(err);
+            toast.error(`${JSON.stringify(err)}`, {
+                position: toast.POSITION.TOP_RIGHT
+              });
         }
     }
 
@@ -47,6 +54,7 @@ function RegisterPage() {
                 value={password}
                 onChange={ev => setPassword(ev.target.value)} />
             <button>Register</button>
+            <ToastContainer />
         </form>
     )
 }

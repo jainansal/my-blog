@@ -3,6 +3,8 @@ import { useContext, useEffect, useState } from "react";
 import { Link, Navigate, useParams } from "react-router-dom";
 import { UserContext } from "../components/UserContext";
 import { apiURL } from "../components/Domain";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function PostPage() {
     const [postInfo, setPostInfo] = useState(null);
@@ -11,14 +13,25 @@ export default function PostPage() {
     const [redirect, setRedirect] = useState(false);
 
     useEffect(() => {
-        fetch(`${apiURL}/post/${id}`).then(response => {
-            response.json().then(postDoc => {
-                setPostInfo(postDoc);
-            })
-        })
+        const getPost = async () => {
+            try {
+                const response = await fetch(`${apiURL}/post/${id}`);
+                const data = await response.json();
+                if(!data.title) {
+                    throw data;
+                }
+                setPostInfo(data);
+            } catch(err) {
+                console.log(err);
+                toast.error(`${JSON.stringify(err)}`, {
+                    position: toast.POSITION.TOP_RIGHT
+                  });
+            }
+        }
+        getPost();
     }, []);
 
-    console.log(postInfo);
+    // console.log(postInfo);
 
     const handleDeleteClick = async (ev) => {
         try {
@@ -34,6 +47,9 @@ export default function PostPage() {
             }
         } catch(err) {
             console.log({msg: err});
+            toast.error(`${JSON.stringify(err)}`, {
+                position: toast.POSITION.TOP_RIGHT
+              });
         }
     }
 
@@ -69,6 +85,7 @@ export default function PostPage() {
                 )}
             </div>
             <div className="content" dangerouslySetInnerHTML={{ __html: postInfo.content }} />
+            <ToastContainer />
         </div>
     )
 };
