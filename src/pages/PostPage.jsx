@@ -63,7 +63,7 @@ export default function PostPage() {
             <h1 className="title">{postInfo.title}</h1>
             <time>{format(new Date(postInfo.createdAt), 'MMM d, yyyy | HH:MM')}</time>
             <div className="author">by @{postInfo.author?.username}</div>
-            {userInfo && userInfo.id === postInfo.author?.id && (
+            {userInfo && userInfo._id === postInfo.author?._id && (
                 <div className="edit-row">
                     <Link to={`/edit/${postInfo._id}`} className="edit-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
